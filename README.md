@@ -2,9 +2,12 @@
 This is lab06 for CS252 (Group Project)
 
 Project Members:
-  *Andrew Berendsen
-  *Ramsey Ali
-  *Kyle Bentain
+
+			*Andrew Berendsen
+
+			*Ramsey Ali
+
+			*Kyle Bentain
   
   
 

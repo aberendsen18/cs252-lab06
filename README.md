@@ -34,3 +34,10 @@ Project Members:
 Project Idea Credit:
 
     The project idea is owed to the "Prisoner Dilemma" and the various games built prior that work off the concept.
+    
+Install Instructions:
+
+1) Download Node.js (make sure npm is installed as well)
+2) npm install request
+3) node server.js
+4) Server is running on specified port #

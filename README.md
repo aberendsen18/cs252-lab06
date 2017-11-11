@@ -37,7 +37,7 @@ Project Idea Credit:
     
 Install Instructions:
 
-1) Download Node.js (make sure npm is installed as well)
-2) npm install request
-3) node server.js
-4) Server is running on specified port #
+	1) Download Node.js (make sure npm is installed as well)
+	2) npm install request
+	3) node server.js
+	4) Server is running on specified port #

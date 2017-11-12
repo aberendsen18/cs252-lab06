@@ -43,5 +43,6 @@ Install Instructions:
 	4) Server is running on specified port #
 	
 Useful Links:
-https://github.com/aerrity/socket-click-example - Real-time communication between users on webpage (see last example on page)
-https://scotch.io/courses/build-a-nodejs-website - Need to re-do skeleton using these tutorials - well give us a better base
+
+	https://github.com/aerrity/socket-click-example - Real-time communication between users on webpage (see last example on page)
+	https://scotch.io/courses/build-a-nodejs-website - Need to re-do skeleton using these tutorials - well give us a better base

@@ -1,6 +1,6 @@
 # cs252-lab06
 This is lab06 for CS252 (Group Project)
-
+This is a test!
 Project Members:
 
 		Andrew Berendsen - aberends@purdue.edu
@@ -41,3 +41,8 @@ Install Instructions:
 	2) npm install request
 	3) node server.js
 	4) Server is running on specified port #
+	
+Useful Links:
+
+	https://github.com/aerrity/socket-click-example - Real-time communication between users on webpage (see last example on page)
+	https://scotch.io/courses/build-a-nodejs-website - Need to re-do skeleton using these tutorials - well give us a better base

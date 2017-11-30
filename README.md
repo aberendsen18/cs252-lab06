@@ -62,5 +62,5 @@ Install Instructions:
 Useful Links:
 
     1)   https://github.com/aerrity/socket-click-example - Real-time communication between users on webpage (see last example on page)
-    2)    https://closebrace.com/tutorials/2017-03-02/creating-a-simple-restful-web-app-with-nodejs-express-and-mongodb
+    2)   https://closebrace.com/tutorials/2017-03-02/creating-a-simple-restful-web-app-with-nodejs-express-and-mongodb
     

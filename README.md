@@ -45,13 +45,13 @@ Install Instructions:
       3) in root directory run: npm install express
       4) in root directory run: npm install express-generator
       5) in nodetest2 directory run: npm install
-      6) in bin folder within MongoDB directory run: ./mongod --dbpath [ insert path to nodetest2\data here ]
-      7) in seperate window, in bin folder within MongoDB directory run: ./mongo
+      6) in MongoDB directory run: ./mongod --dbpath [ insert path to nodetest2\data here ]
+      7) in seperate window, in MongoDB directory run: ./mongo
       8) in the seperate window, in MongoDB command-line run: use nodetest2
       9) in the seperate window, in MongoDB command-line run: db.userlist.insert({'username' : 'test1','email' : 'test1@test.com','fullname' : 'Bob Smith','age' : 27,'location' : 'San Francisco','gender' : 'Male'})
       
       HOW TO START DATABASE
-      1) in bin folder within MongoDB directory run: mongod --dbpath [ insert path to nodetest2\data here ]
+      1) in MongoDB directory run: mongod --dbpath [ insert path to nodetest2\data here ]
       
       HOW TO START SERVER
       1) in nodtest2 directory run: npm start

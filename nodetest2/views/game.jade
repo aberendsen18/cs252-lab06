@@ -1,0 +1,44 @@
+extends layout
+
+block content
+    h1= title
+    p Welcome to our test
+
+    // Wrapper
+    #wrapper
+
+        // USER POINTS
+        #userPoints
+            h2 Your Points: 
+            p
+                strong Name:
+                |  <span id='userInfoName'></span>
+        // /USER POINTS
+
+        // TIME REMAINING
+        h2 Time Remaining: 
+        #timeRemaining
+            table
+                thead
+                    th UserName
+                tbody
+        // /TIME REMAINING
+
+        // ROUND NUMBER
+        style.
+          button#btnSteal {
+            color: #f00;
+          }
+          button#btnHelp {
+            color: #00FF00;
+          }
+        h2 Round
+        #roundNumber
+            fieldset
+                button#btnSteal Steal
+                button#btnHelp Heal
+                br
+                button#btnSubmit Submit
+        // /ROUND NUMBER
+
+    // /WRAPPER

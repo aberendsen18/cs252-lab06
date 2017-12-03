@@ -1,0 +1,7 @@
+#Files to ignore for git
+
+#Files
+package-lock.json
+
+#Folders
+node_modules/

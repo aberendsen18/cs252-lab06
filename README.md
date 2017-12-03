@@ -1,6 +1,6 @@
 # cs252-lab06
 This is lab06 for CS252 (Group Project)
-This is a test!
+
 Project Members:
 
 		Andrew Berendsen - aberends@purdue.edu
@@ -28,8 +28,8 @@ Project Members:
   Technologies:
   
     -HTML5
-    -NodeJS
-    -AngularJS
+    -NodeJS (incl. modules such as express, jade)
+    -MongoDB
     
 Project Idea Credit:
 
@@ -37,12 +37,30 @@ Project Idea Credit:
     
 Install Instructions:
 
-	1) Download Node.js (make sure npm is installed as well)
-	2) npm install request
-	3) node server.js
-	4) Server is running on specified port #
+    Skeleton is based on tutorial described in Useful Link #2
+    
+      INITIAL SETUP
+      1) Download Node.js (make sure npm is installed as well)
+      2) Download MongoDB Community Edition
+      3) in root directory run: npm install express
+      4) in root directory run: npm install express-generator
+      5) in nodetest2 directory run: npm install
+      6) in bin folder within MongoDB directory run: ./mongod --dbpath [ insert path to nodetest2\data here ]
+      7) in seperate window, in bin folder within MongoDB directory run: ./mongo
+      8) in the seperate window, in MongoDB command-line run: use nodetest2
+      9) in the seperate window, in MongoDB command-line run: db.userlist.insert({'username' : 'test1','email' : 'test1@test.com','fullname' : 'Bob Smith','age' : 27,'location' : 'San Francisco','gender' : 'Male'})
+      
+      HOW TO START DATABASE
+      1) in bin folder within MongoDB directory run: mongod --dbpath [ insert path to nodetest2\data here ]
+      
+      HOW TO START SERVER
+      1) in nodtest2 directory run: npm start
+      
+      HOW TO ACCESS SERVER
+      1) go to localhost:3000
 	
 Useful Links:
 
-	https://github.com/aerrity/socket-click-example - Real-time communication between users on webpage (see last example on page)
-	https://scotch.io/courses/build-a-nodejs-website - Need to re-do skeleton using these tutorials - well give us a better base
+    1)   https://github.com/aerrity/socket-click-example - Real-time communication between users on webpage (see last example on page)
+    2)   https://closebrace.com/tutorials/2017-03-02/creating-a-simple-restful-web-app-with-nodejs-express-and-mongodb
+    

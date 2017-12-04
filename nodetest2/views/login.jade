@@ -1,0 +1,22 @@
+extends layout
+
+script(src='lib/jquery/jquery-1.7.1.min.js')    
+script(src='lib/bootstrap/js/bootstrap.min.js')
+
+block content
+    h1= title
+    p Please login or if you don't have an account, create one.
+    
+    #wrapper
+    
+      | Username: 
+      input#inputUserNameLogin(type='text', placeholder='Username')
+      br
+      | Password: 
+      input#inputPasswordLogin(type='password', placeholder='Password')
+      br
+      button#btnLogin Login
+      br
+      br
+      br
+      button#btnCreateAccount Create Account

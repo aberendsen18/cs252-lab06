@@ -1,0 +1,42 @@
+extends layout
+
+block content
+    h1= title
+    p Please complete the form to create an account.
+
+    // Wrapper
+    #wrapper
+
+      #addUser
+        fieldset
+            | Username:
+            input#inputUserName(type='text', placeholder='Username')
+            br
+            br
+            | Password: 
+            input#inputUserPassword(type='password', placeholder='Password')
+            br
+            br
+            | Full Name: 
+            input#inputUserFullname(type='text', placeholder='Full Name')
+            br
+            br
+            | Email: 
+            input#inputUserEmail(type='text', placeholder='Email')
+            br
+            br
+            | Gender: 
+            select.selectpicker(name='genderValue')
+              option Male
+              option Female
+            br
+            br
+            | Short Bio: 
+            input#inputUserBio(type='text', placeholder='Short Bio')
+            br
+            br
+            br
+            button#btnAddUser Add User
+          // /ADD USER
+
+    // /WRAPPER

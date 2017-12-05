@@ -2,19 +2,33 @@
 // Userlist data array for filling in info box
 var userListData = [];
 
+<<<<<<< Updated upstream
 //Min Players for lobby
 var MinPlayers = 4;
 
 //current URL
 var WebURL;
+=======
+var app = express();
+
+//this is the counter for the rounds
+var round_counter = 0;
+
+//this is a timer for the auto-submission of the steal/help option
+var timer = 10;
+>>>>>>> Stashed changes
 
 // DOM Ready =============================================================
 $(document).ready(function() {
 
     populateTable();
 
+<<<<<<< Updated upstream
     WebURL = location.href;
     //console.log(WebURL);
+=======
+    check_answers();
+>>>>>>> Stashed changes
 
     // Username link click
     $('#userList table tbody').on('click', 'td a.linkshowuser', showUserInfo);
@@ -31,12 +45,50 @@ $(document).ready(function() {
     // Delete User link click
     $('#userList table tbody').on('click', 'td a.linkdeleteuser', deleteUser);
 
+<<<<<<< Updated upstream
     // Logout button click
     $('#btnLogOut').on('click', loginScreen);
+=======
+>>>>>>> Stashed changes
 
 });
 
 // Functions =============================================================
+
+
+}
+
+function check_answers() {
+
+  var user1, user2, user3, user4;
+  var user_number = 1;
+  //get the userList
+  $.getJSON( '/users/userlist', function( data ) {
+    // Stick our user data array into a userlist variable in the global object
+    userListData = data;
+      // For each item in our JSON, add a table row and cells to the content string
+      $.each(data, function(){
+          if (this.answer == "none") {
+            return false;
+          }
+      });
+  //variable in order to know when to reload the page
+  var run = true;
+
+  //run until every user has inserted an answer
+  while (run) {
+    // jQuery AJAX call for JSON
+    if ((user1 == 'help' || user1 == 'steal') &&
+    (user2 == 'help' || user2 == 'steal') &&
+    (user3 == 'help' || user3 == 'steal') &&
+    (user4 == 'help' || user4 == 'steal')) {
+      run = false;
+    } else if (timer == 0) {
+      run = false;
+    }
+    timer--;
+  }
+  };
 
 // Fill table with data
 function populateTable() {

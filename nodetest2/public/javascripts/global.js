@@ -1,29 +1,14 @@
-
 // Userlist data array for filling in info box
 var userListData = [];
-
-//Min Players for lobby
-var MinPlayers = 4;
-
-//current URL
-var WebURL;
 
 // DOM Ready =============================================================
 $(document).ready(function() {
 
+    // Populate the user table on initial page load
     populateTable();
-
-    WebURL = location.href;
-    //console.log(WebURL);
 
     // Username link click
     $('#userList table tbody').on('click', 'td a.linkshowuser', showUserInfo);
-
-    // Create Account button click
-    $('#btnCreateAccount').on('click', createAccount);
-
-    // Login button click
-    $('#btnLogin').on('click', login);
 
     // Add User button click
     $('#btnAddUser').on('click', addUser);
@@ -31,12 +16,14 @@ $(document).ready(function() {
     // Delete User link click
     $('#userList table tbody').on('click', 'td a.linkdeleteuser', deleteUser);
 
-    // Logout button click
-    $('#btnLogOut').on('click', loginScreen);
-
 });
 
 // Functions =============================================================
+
+function refreshPage() {
+  round++;
+
+}
 
 // Fill table with data
 function populateTable() {
@@ -81,10 +68,10 @@ function showUserInfo(event) {
 
     //Populate Info Box
     $('#userInfoName').text(thisUserObject.fullname);
+    $('#userInfoAge').text(thisUserObject.age);
     $('#userInfoGender').text(thisUserObject.gender);
-    $('#userInfoBio').text(thisUserObject.bio);
-    $('#userInfoWon').text(thisUserObject.totalwins);
-    $('#userInfoPlayed').text(thisUserObject.totalgames);
+    $('#userInfoLocation').text(thisUserObject.location);
+
 };
 
 // Add User
@@ -102,71 +89,39 @@ function addUser(event) {
 
         // If it is, compile all user info into one object
         var newUser = {
-            'username': $('input#inputUserName').val(),
-            'password': $('input#inputUserPassword').val(),
-            'fullname': $('input#inputUserFullname').val(),
-            'email': $('input#inputUserEmail').val(),
-            'bio': $('input#inputUserBio').val(),
-            'gender': $('select.selectpicker').find("option:selected").val(),
-            'answer': 'Z',
-            'points': '-1',
-            'totalwins': '0',
-            'totalgames': '0'
+            'username': $('#addUser fieldset input#inputUserName').val(),
+            'email': $('#addUser fieldset input#inputUserEmail').val(),
+            'fullname': $('#addUser fieldset input#inputUserFullname').val(),
+            'age': $('#addUser fieldset input#inputUserAge').val(),
+            'location': $('#addUser fieldset input#inputUserLocation').val(),
+            'gender': $('#addUser fieldset input#inputUserGender').val()
         }
 
-        var usernameTextbox = $('input#inputUserName').val();
-
-        $.getJSON( '/users/userlist', function( data ) {
-
-          // Stick our user data array into a userlist variable in the global object
-          userListData = data;
-
-          //number of iterations in below loop
-          var count = 0;
-          //flag for existing user
-          var userFound = false;
-
-          // For each item in our JSON, see if it matches username and password
-          $.each(data, function(){
-
-              ++count;
-
-              if (this.username == usernameTextbox) {
-                userFound = true;
-              }
-
-              if (count == Object.keys(userListData).length) {
-                if (!userFound) {
-                  console.log("adding..");
-                  $.ajax({
-                      type: 'POST',
-                      data: newUser,
-                      url: '/users/adduser',
-                      dataType: 'JSON'
-                  }).done(function( response ) {
-                      // Check for successful (blank) response
-                      if (response.msg === '') {
-                          alert('Account created successfully!');
-                          loginScreen();
-                      }
-                      else {
-                          // If something goes wrong, alert the error message that our service returned
-                          alert('Error: ' + response.msg);
-                      }
-                  });
-
-                } else {
-                  alert("This username is already in-use! Please use another username.")
-                }
-              }
-
-          });
-        });
-
         // Use AJAX to post the object to our adduser service
+        $.ajax({
+            type: 'POST',
+            data: newUser,
+            url: '/users/adduser',
+            dataType: 'JSON'
+        }).done(function( response ) {
 
+            // Check for successful (blank) response
+            if (response.msg === '') {
 
-        console.log(newUser);
+                // Clear the form inputs
+                $('#addUser fieldset input').val('');
+
+                // Update the table
+                populateTable();
+
+            }
+            else {
+
+                // If something goes wrong, alert the error message that our service returned
+                alert('Error: ' + response.msg);
+
+            }
+        });
     }
     else {
         // If errorCount is more than 0, error out
@@ -214,63 +169,44 @@ function deleteUser(event) {
 
 };
 
-// Login User
-function login(event) {
-
-    event.preventDefault();
-
-    var usernameTextbox = $('input#inputUserNameLogin').val();
-    var passwordTextbox = $('input#inputPasswordLogin').val();
-    var userFound = false;
-    var count = 0;
-
-    // jQuery AJAX call for JSON
-    $.getJSON( '/users/userlist', function( data ) {
-
-      // Stick our user data array into a userlist variable in the global object
-      userListData = data;
-
-      // For each item in our JSON, see if it matches username and password
-      $.each(data, function(){
-
-          ++count;
-          if (this.username == usernameTextbox) {
-            userFound = true;
-            if (this.password == passwordTextbox) {
-              //console.log("Render Lobby page");
-              window.location.href = "/lobby";
-            } else {
-              alert("Password is incorrect!");
-            }
-            return false;
-          }
-
-
-          if (count == Object.keys(userListData).length) {
-            if (!userFound) {
-              var confirmation = confirm('No account found! Would you like to make an account?');
-              if (confirmation) {
-                createAccount();
-              }
-            }
-          }
-
-      });
-    });
-
-};
-
-function createAccount(event) {
-  event.preventDefault();
-  createAccount();
+function getTimeRemaining(endtime) {
+  var t = Date.parse(endtime) - Date.parse(new Date());
+  var seconds = Math.floor((t / 1000) % 60);
+  var minutes = Math.floor((t / 1000 / 60) % 60);
+  var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+  var days = Math.floor(t / (1000 * 60 * 60 * 24));
+  return {
+    'total': t,
+    'days': days,
+    'hours': hours,
+    'minutes': minutes,
+    'seconds': seconds
+  };
 }
 
-function createAccount() {
-  //console.log("Render Create Account page");
-  window.location.href = "/create";
+function initializeClock(id, endtime) {
+  var clock = document.getElementById(id);
+  var daysSpan = clock.querySelector('.days');
+  var hoursSpan = clock.querySelector('.hours');
+  var minutesSpan = clock.querySelector('.minutes');
+  var secondsSpan = clock.querySelector('.seconds');
+
+  function updateClock() {
+    var t = getTimeRemaining(endtime);
+
+    daysSpan.innerHTML = t.days;
+    hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+    if (t.total <= 0) {
+      clearInterval(timeinterval);
+    }
+  }
+
+  updateClock();
+  var timeinterval = setInterval(updateClock, 1000);
 }
 
-function loginScreen() {
-  //console.log("Render Login Screen page");
-  window.location.href = "/";
-}
+var deadline = new Date(Date.parse(new Date()) + 60 * 1000);
+initializeClock('clockdiv', deadline);

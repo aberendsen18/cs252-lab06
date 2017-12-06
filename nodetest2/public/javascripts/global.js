@@ -264,6 +264,8 @@ function login(event) {
               $.cookie('user', usernameTextbox, {expires: 1}); // store logged-in user as cookie that expires in 1 day
               lobbyScreen();
             } else {
+              //set password textbox to empty when re-attempting password
+              $('input#inputPasswordLogin').val('');
               alert("Password is incorrect!");
             }
             return false;

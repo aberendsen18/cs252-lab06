@@ -1,42 +1,48 @@
-extends layout
-
-block content
-    h1= title
-    p Please complete the form to create an account.
-
-    // Wrapper
-    #wrapper
-
-      #addUser
-        fieldset
-            | Username:
-            input#inputUserName(type='text', placeholder='Username')
-            br
-            br
-            | Password: 
-            input#inputUserPassword(type='password', placeholder='Password')
-            br
-            br
-            | Full Name: 
-            input#inputUserFullname(type='text', placeholder='Full Name')
-            br
-            br
-            | Gender: 
-            select.selectpicker(name='genderValue')
-              option Male
-              option Female
-            br
-            br
-            | Email: 
-            input#inputUserEmail(type='text', placeholder='Email')
-            br
-            br
-            | Short Bio: 
-            input#inputUserBio(type='text', placeholder='Short Bio')
-            br
-            br
-            br
-            button#btnAddUser Add User
-          // /ADD USER
-
-    // /WRAPPER
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css')
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css', type='text/css')
+    link(rel='stylesheet', href='https://drive.google.com/uc?export=download&id=1JcrTrDSD7cwkycAspVLudhkLkS_78fMc', type='text/css')
+  body
+    block content
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js', integrity='sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh', crossorigin='anonymous')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js', integrity='sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1', crossorigin='anonymous')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js')
+    script(src='/javascripts/global.js')
+    
+    .p-0
+      .container
+        .row
+          .col-md-12
+            img.img-fluid.d-block.mx-auto.w-50.h-100(src='https://i.imgur.com/QkRLngv.png')
+    .p-0
+      .container
+        .row
+          .col-md-12
+            #addUser            
+              input#inputUserName.form-control.text-center(type='text', name='username', placeholder='Username')
+              input#inputUserPassword.form-control.text-center(type='password', name='password', placeholder='Password')
+              input#inputUserFullname.form-control.text-center(type='text', name='fullname', placeholder='Full Name')
+              select.selectpicker.form-control.text-center(name='genderValue')
+                option Male
+                option Female
+              input#inputUserNameLogin.form-control.text-center(type='email', name='email', placeholder='Email')
+              input#inputUserNameLogin.form-control.text-center(type='text', name='shortbio', placeholder='Short Bio')
+              button#btnAddUser.btn.btn-primary.btn-block(type='submit', style='cursor:pointer') Register
+    .px-5
+      .container
+        .row.py-5.my-5
+          .col-xs-2.mx-auto
+            a(href='https://github.com/aberendsen18/cs252-lab06')
+              img.img-fluid.d-block(src='https://www.appnovation.com/sites/default/files/2016-12/github.png', style='cursor:pointer')
+          a(href='https://github.com/aberendsen18/cs252-lab06')  
+        a(href='https://github.com/aberendsen18/cs252-lab06')  
+      a(href='https://github.com/aberendsen18/cs252-lab06')  
+    a(href='https://github.com/aberendsen18/cs252-lab06')

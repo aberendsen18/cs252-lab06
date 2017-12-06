@@ -1,22 +1,42 @@
-extends layout
-
-script(src='lib/jquery/jquery-1.7.1.min.js')    
-script(src='lib/bootstrap/js/bootstrap.min.js')
-
-block content
-    h1= title
-    p Please login or if you don't have an account, create one.
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css')
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css', type='text/css')
+    link(rel='stylesheet', href='https://drive.google.com/uc?export=download&id=1JcrTrDSD7cwkycAspVLudhkLkS_78fMc', type='text/css')
+  body
+    block content
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js', integrity='sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh', crossorigin='anonymous')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js', integrity='sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1', crossorigin='anonymous')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js')
+    script(src='/javascripts/global.js')
     
-    #wrapper
-    
-      | Username: 
-      input#inputUserNameLogin(type='text', placeholder='Username')
-      br
-      | Password: 
-      input#inputPasswordLogin(type='password', placeholder='Password')
-      br
-      button#btnLogin Login
-      br
-      br
-      br
-      button#btnCreateAccount Create Account
+    .p-0
+      .container
+        .row
+          .col-md-12
+            img.img-fluid.d-block.mx-auto.w-50.h-100(src='https://i.imgur.com/QkRLngv.png')
+    .p-0
+      .container
+        .row
+          .col-md-12
+            input#inputUserNameLogin.form-control.text-center(type='email', name='email', placeholder='Username')
+            input#inputPasswordLogin.form-control.text-center(type='password', name='password', placeholder='Password')
+            button#btnLogin.btn.btn-primary.btn-block(type='submit', style='cursor:pointer') Login
+            button#btnCreateAccount.btn.btn-primary.btn-block.p-1.my-3(type='submit', style='cursor:pointer') Register
+    .px-5
+      .container
+        .row.py-5.my-5
+          .col-xs-2.mx-auto
+            a(href='https://github.com/aberendsen18/cs252-lab06')
+              img.img-fluid.d-block(src='https://www.appnovation.com/sites/default/files/2016-12/github.png', style='cursor:pointer')
+          a(href='https://github.com/aberendsen18/cs252-lab06')  
+        a(href='https://github.com/aberendsen18/cs252-lab06')  
+      a(href='https://github.com/aberendsen18/cs252-lab06')  
+    a(href='https://github.com/aberendsen18/cs252-lab06')

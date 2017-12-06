@@ -16,7 +16,7 @@ block content
         // /USER POINTS
 
         // TIME REMAINING
-        h2 Time Remaining: 
+        h2 Time Remaining: #{demo} 
         #timeRemaining
             table
                 thead
@@ -40,5 +40,22 @@ block content
                 br
                 button#btnSubmit Submit
         // /ROUND NUMBER
-
+        // COUNTDOWN CLOCK
+        link(href='/css/timer.css', rel='stylesheet')
+        h1 Countdown Clock
+        #clockdiv
+          div
+            span.days
+            .smalltext Days
+          div
+            span.hours
+            .smalltext Hours
+          div
+            span.minutes
+            .smalltext Minutes
+          div
+            span.seconds
+            .smalltext Seconds
+            //  /COUNTDOWN CLOCK
     // /WRAPPER
+    

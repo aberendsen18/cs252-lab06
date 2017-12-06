@@ -8,6 +8,9 @@ var MinPlayers = 4;
 //current URL
 var WebURL;
 
+//logged-in user
+var user;
+
 // DOM Ready =============================================================
 $(document).ready(function() {
 
@@ -15,6 +18,21 @@ $(document).ready(function() {
 
     WebURL = location.href;
     //console.log(WebURL);
+
+    if (WebURL.includes('lobby')) {
+      user = $.cookie('user');
+      if (user == 'null') {
+        alert('Please sign in first before entering the lobby!');
+        loginScreen();
+      }
+    } else if (WebURL.includes('create')) {
+      user = null;
+      $.cookie('user', user, {expires: 1}); // reset logged-in user as cookie that expires in 1 day
+    } else {
+      //if nothing else, assume it's login page
+      user = null;
+      $.cookie('user', user, {expires: 1}); // reset logged-in user as cookie that expires in 1 day
+    }
 
     // Username link click
     $('#userList table tbody').on('click', 'td a.linkshowuser', showUserInfo);
@@ -32,7 +50,12 @@ $(document).ready(function() {
     $('#userList table tbody').on('click', 'td a.linkdeleteuser', deleteUser);
 
     // Logout button click
-    $('#btnLogOut').on('click', loginScreen);
+    $('#btnLogOut').on('click', function() {
+      alert("Thanks for playing!");
+      loginScreen();
+    });
+
+
 
 });
 
@@ -238,7 +261,8 @@ function login(event) {
             userFound = true;
             if (this.password == passwordTextbox) {
               //console.log("Render Lobby page");
-              window.location.href = "/lobby";
+              $.cookie('user', usernameTextbox, {expires: 1}); // store logged-in user as cookie that expires in 1 day
+              lobbyScreen();
             } else {
               alert("Password is incorrect!");
             }
@@ -266,11 +290,16 @@ function createAccount(event) {
 }
 
 function createAccount() {
-  //console.log("Render Create Account page");
+  //console.log("Go to Create Account page");
   window.location.href = "/create";
 }
 
 function loginScreen() {
-  //console.log("Render Login Screen page");
+  //console.log("Go to Login Screen page");
   window.location.href = "/";
+}
+
+function lobbyScreen() {
+  //console.log("Render Login Screen page");
+  window.location.href = "/lobby";
 }

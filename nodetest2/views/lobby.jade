@@ -1,0 +1,43 @@
+extends layout
+
+block content
+    h1= title
+    p Welcome user #{user} to the Lobby. Waiting for game to start...
+
+    // Wrapper
+    #wrapper
+
+        // USER INFO
+        #userInfo
+            h2 Player Profile
+            p
+                strong Name:
+                |  <span id='userInfoName'></span>
+                br
+                strong Age:
+                |  <span id='userInfoGender'></span>
+                br
+                strong Short Bio:
+                |  <span id='userInfoBio'></span>
+                br
+                strong  Total Games Won:
+                |  <span id='userInfoWon'></span>
+                br
+                strong  Total Games Played:
+                |  <span id='userInfoPlayed'></span>
+        // /USER INFO
+
+        // USER LIST
+        h2 Players in Lobby
+        #userList
+            table
+                thead
+                    th Username
+                    th Email
+                    th Delete?
+                tbody
+        // /USER LIST
+        
+        button#btnLogOut Log out
+
+    // /WRAPPER

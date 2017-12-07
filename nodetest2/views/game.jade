@@ -1,0 +1,55 @@
+extends layout
+
+block content
+    h1= title
+    p Welcome to our test
+
+    // Wrapper
+    #wrapper
+
+        // USER POINTS
+        #userPoints
+            h2 Your Points: 
+            p
+                strong Name:
+                |  <span id='userInfoName'></span>
+        // /USER POINTS
+
+
+        // /TIME REMAINING
+
+        // ROUND NUMBER
+        style.
+          button#btnSteal {
+            color: #f00;
+          }
+          button#btnHelp {
+            color: #00FF00;
+          }
+        h2 Round:
+        #roundNumber
+            fieldset
+                button#btnSteal Steal
+                button#btnHelp Heal
+                br
+                //button#btnSubmit Submit
+        // /ROUND NUMBER
+        // COUNTDOWN CLOCK
+        link(href='/css/timer.css', rel='stylesheet')
+        h1 Countdown Clock
+        #clockdiv
+          div
+            span.days
+            .smalltext Days
+          div
+            span.hours
+            .smalltext Hours
+          div
+            span.minutes
+            .smalltext Minutes
+          div
+            span.seconds
+            .smalltext Seconds
+            //  /COUNTDOWN CLOCK
+    // /WRAPPER
+    

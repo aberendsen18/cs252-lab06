@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
   res.render('login', { title: 'Login' });
 });
 
-/* GET index page. */
+/* GET lobby page. */
 router.get('/lobby', function(req, res, next) {
   res.render('lobby', { title: 'Lobby' });
 });

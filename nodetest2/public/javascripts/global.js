@@ -1,11 +1,38 @@
 // Userlist data array for filling in info box
 var userListData = [];
 
+//Min Players for lobby
+var MinPlayers = 4;
+
+//current URL
+var WebURL;
+
+//logged-in user
+var user;
+
 // DOM Ready =============================================================
 $(document).ready(function() {
 
     // Populate the user table on initial page load
     populateTable();
+
+    WebURL = location.href;
+    //console.log(WebURL);
+
+    if (WebURL.includes('lobby')) {
+      user = $.cookie('user');
+      if (user == 'null') {
+        alert('Please sign in first before entering the lobby!');
+        loginScreen();
+      }
+    } else if (WebURL.includes('create')) {
+      user = null;
+      $.cookie('user', user, {expires: 1}); // reset logged-in user as cookie that expires in 1 day
+    } else {
+      //if nothing else, assume it's login page
+      user = null;
+      $.cookie('user', user, {expires: 1}); // reset logged-in user as cookie that expires in 1 day
+    }
 
     // Username link click
     $('#userList table tbody').on('click', 'td a.linkshowuser', showUserInfo);
@@ -15,6 +42,14 @@ $(document).ready(function() {
 
     // Delete User link click
     $('#userList table tbody').on('click', 'td a.linkdeleteuser', deleteUser);
+
+    // Logout button click
+    $('#btnLogOut').on('click', function() {
+      alert("Thanks for playing!");
+      loginScreen();
+    });
+
+
 
 });
 
@@ -204,9 +239,55 @@ function initializeClock(id, endtime) {
     }
   }
 
-  updateClock();
-  var timeinterval = setInterval(updateClock, 1000);
+      // For each item in our JSON, see if it matches username and password
+      $.each(data, function(){
+
+          ++count;
+          if (this.username == usernameTextbox) {
+            userFound = true;
+            if (this.password == passwordTextbox) {
+              //console.log("Render Lobby page");
+              $.cookie('user', usernameTextbox, {expires: 1}); // store logged-in user as cookie that expires in 1 day
+              lobbyScreen();
+            } else {
+              //set password textbox to empty when re-attempting password
+              $('input#inputPasswordLogin').val('');
+              alert("Password is incorrect!");
+            }
+            return false;
+          }
+
+
+          if (count == Object.keys(userListData).length) {
+            if (!userFound) {
+              var confirmation = confirm('No account found! Would you like to make an account?');
+              if (confirmation) {
+                createAccount();
+              }
+            }
+          }
+
+      });
+    });
+
+};
+
+function createAccount(event) {
+  event.preventDefault();
+  createAccount();
 }
 
-var deadline = new Date(Date.parse(new Date()) + 60 * 1000);
-initializeClock('clockdiv', deadline);
+function createAccount() {
+  //console.log("Go to Create Account page");
+  window.location.href = "/create";
+}
+
+function loginScreen() {
+  //console.log("Go to Login Screen page");
+  window.location.href = "/";
+}
+
+function lobbyScreen() {
+  //console.log("Render Login Screen page");
+  window.location.href = "/lobby";
+}

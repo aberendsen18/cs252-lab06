@@ -7,3 +7,4 @@ package-lock.json
 node_modules/
 nodetest2/node_modules/
 nodetest2/data/
+data/

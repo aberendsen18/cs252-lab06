@@ -305,3 +305,21 @@ function lobbyScreen() {
   //console.log("Render Login Screen page");
   window.location.href = "/lobby";
 }
+
+/* Example of how to change answer */
+/*
+$.ajax({
+    type: 'POST',
+    url: '/users/updateanswer'
+}).done(function( response ) {
+
+    // Check for a successful (blank) response
+    if (response.msg === '') {
+      alert("Done!");
+    }
+    else {
+        alert('Error: ' + response.msg);
+    }
+
+});
+*/

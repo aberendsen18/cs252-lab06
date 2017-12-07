@@ -73,4 +73,21 @@ router.post('/addlobbyuser', function(req, res) {
     });
 });
 
+/*
+* UPDATE user answer
+*/
+router.post('/updateanswer', function(req, res) {
+    var db = req.db;
+    var collection = db.get('userlist');
+    var user = req.cookies.user;
+    var user_answer = req.cookies.points;
+    collection.update( { username: user}, { $set: { answer : user_answer } } ,function(err, result){
+        res.send(
+            //Send an empty string is sent to database successfully, else, send back the error
+            (err === null) ? { msg: '' } : { msg: err }
+        );
+    });
+});
+
+
 module.exports = router;

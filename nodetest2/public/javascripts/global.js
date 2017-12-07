@@ -28,6 +28,14 @@ $(document).ready(function() {
     } else if (WebURL.includes('create')) {
       user = null;
       $.cookie('user', user, {expires: 1}); // reset logged-in user as cookie that expires in 1 day
+    } else if (WebURL.includes('game')) {
+        if (WebURL.includes('over')) {
+          user = $.cookie('user');
+        } else {
+          var deadline = new Date(Date.parse(new Date()) + 60 * 1000);
+          initializeClock('clockdiv', deadline);
+          user = $.cookie('user');
+        }
     } else {
       //if nothing else, assume it's login page
       user = null;
@@ -239,7 +247,80 @@ function initializeClock(id, endtime) {
     }
   }
 
+      // For each item in our JSON, see if it matches username and password
+      $.each(data, function(){
+
+          ++count;
+          if (this.username == usernameTextbox) {
+            userFound = true;
+            if (this.password == passwordTextbox) {
+              //console.log("Render Lobby page");
+              $.cookie('user', usernameTextbox, {expires: 1}); // store logged-in user as cookie that expires in 1 day
+              lobbyScreen();
+            } else {
+              //set password textbox to empty when re-attempting password
+              $('input#inputPasswordLogin').val('');
+              alert("Password is incorrect!");
+            }
+            return false;
+          }
+
+
+          if (count == Object.keys(userListData).length) {
+            if (!userFound) {
+              var confirmation = confirm('No account found! Would you like to make an account?');
+              if (confirmation) {
+                createAccount();
+              }
+            }
+          }
+
+      });
+    });
+
+};
+
+function getTimeRemaining(endtime) {
+  var t = Date.parse(endtime) - Date.parse(new Date());
+  var seconds = Math.floor((t / 1000) % 60);
+  var minutes = Math.floor((t / 1000 / 60) % 60);
+  var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+  var days = Math.floor(t / (1000 * 60 * 60 * 24));
+  return {
+    'total': t,
+    'days': days,
+    'hours': hours,
+    'minutes': minutes,
+    'seconds': seconds
+  };
+}
+
+function initializeClock(id, endtime) {
+  var clock = document.getElementById(id);
+  var daysSpan = clock.querySelector('.days');
+  var hoursSpan = clock.querySelector('.hours');
+  var minutesSpan = clock.querySelector('.minutes');
+  var secondsSpan = clock.querySelector('.seconds');
+
+  function updateClock() {
+    var t = getTimeRemaining(endtime);
+
+    daysSpan.innerHTML = t.days;
+    hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+    if (t.total <= 0) {
+      clearInterval(timeinterval);
+    }
+  }
+
   var timeinterval = setInterval(updateClock, 1000);
+}
+
+function createAccount(event) {
+  event.preventDefault();
+  createAccount();
 }
 
 var deadline = new Date(Date.parse(new Date()) + 60 * 1000);
@@ -257,3 +338,32 @@ function lobbyScreen() {
   //console.log("Render Login Screen page");
   window.location.href = "/lobby";
 }
+
+function gameScreen() {
+    //console.log("Render the game page");
+    window.location.href = "/game";
+
+}
+
+function gameOverScreen() {
+    //console.log("Render the game page");
+    window.location.href = "/gameover";
+}
+
+/* Example of how to change answer */
+/*
+$.ajax({
+    type: 'POST',
+    url: '/users/updateanswer'
+}).done(function( response ) {
+
+    // Check for a successful (blank) response
+    if (response.msg === '') {
+      alert("Done!");
+    }
+    else {
+        alert('Error: ' + response.msg);
+    }
+
+});
+*/

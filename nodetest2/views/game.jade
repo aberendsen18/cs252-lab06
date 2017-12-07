@@ -15,13 +15,7 @@ block content
                 |  <span id='userInfoName'></span>
         // /USER POINTS
 
-        // TIME REMAINING
-        h2 Time Remaining: #{demo} 
-        #timeRemaining
-            table
-                thead
-                    th UserName
-                tbody
+
         // /TIME REMAINING
 
         // ROUND NUMBER
@@ -32,13 +26,13 @@ block content
           button#btnHelp {
             color: #00FF00;
           }
-        h2 Round
+        h2 Round:
         #roundNumber
             fieldset
                 button#btnSteal Steal
                 button#btnHelp Heal
                 br
-                button#btnSubmit Submit
+                //button#btnSubmit Submit
         // /ROUND NUMBER
         // COUNTDOWN CLOCK
         link(href='/css/timer.css', rel='stylesheet')

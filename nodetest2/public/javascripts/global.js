@@ -28,6 +28,8 @@ $(document).ready(function() {
     } else if (WebURL.includes('create')) {
       user = null;
       $.cookie('user', user, {expires: 1}); // reset logged-in user as cookie that expires in 1 day
+    } else if (WebURL.includes('game')) {
+        user = $.cookie('user');
     } else {
       //if nothing else, assume it's login page
       user = null;

@@ -28,6 +28,10 @@ $(document).ready(function() {
     } else if (WebURL.includes('create')) {
       user = null;
       $.cookie('user', user, {expires: 1}); // reset logged-in user as cookie that expires in 1 day
+    } else if (WebURL.includes('game')) {
+        var deadline = new Date(Date.parse(new Date()) + 60 * 1000);
+        initializeClock('clockdiv', deadline);
+        user = $.cookie('user');
     } else {
       //if nothing else, assume it's login page
       user = null;
@@ -204,6 +208,57 @@ function deleteUser(event) {
 
 };
 
+//user login
+// Login User
+function login(event) {
+    
+        event.preventDefault();
+    
+        var usernameTextbox = $('input#inputUserNameLogin').val();
+        var passwordTextbox = $('input#inputPasswordLogin').val();
+        var userFound = false;
+        var count = 0;
+    
+        // jQuery AJAX call for JSON
+        $.getJSON( '/users/userlist', function( data ) {
+    
+          // Stick our user data array into a userlist variable in the global object
+          userListData = data;
+    
+          // For each item in our JSON, see if it matches username and password
+          $.each(data, function(){
+    
+              ++count;
+              if (this.username == usernameTextbox) {
+                userFound = true;
+                if (this.password == passwordTextbox) {
+                  //console.log("Render Lobby page");
+                  $.cookie('user', usernameTextbox, {expires: 1}); // store logged-in user as cookie that expires in 1 day
+                  lobbyScreen();
+                } else {
+                  //set password textbox to empty when re-attempting password
+                  $('input#inputPasswordLogin').val('');
+                  alert("Password is incorrect!");
+                }
+                return false;
+              }
+    
+    
+              if (count == Object.keys(userListData).length) {
+                if (!userFound) {
+                  var confirmation = confirm('No account found! Would you like to make an account?');
+                  if (confirmation) {
+                    createAccount();
+                  }
+                }
+              }
+    
+          });
+        });
+    
+    };
+    
+
 function getTimeRemaining(endtime) {
   var t = Date.parse(endtime) - Date.parse(new Date());
   var seconds = Math.floor((t / 1000) % 60);
@@ -242,8 +297,11 @@ function initializeClock(id, endtime) {
   var timeinterval = setInterval(updateClock, 1000);
 }
 
-var deadline = new Date(Date.parse(new Date()) + 60 * 1000);
-initializeClock('clockdiv', deadline);
+function createAccount(event) {
+    event.preventDefault();
+    createAccount();
+  }
+
 function createAccount() {
   window.location.href = "/create";
 }
@@ -256,4 +314,10 @@ function loginScreen() {
 function lobbyScreen() {
   //console.log("Render Login Screen page");
   window.location.href = "/lobby";
+}
+
+function gameScreen() {
+    //console.log("Render the game page");
+    window.location.href = "/game";
+   
 }

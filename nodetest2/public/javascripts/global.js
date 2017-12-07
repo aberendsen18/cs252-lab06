@@ -63,12 +63,13 @@ $(document).ready(function() {
           //game logic
         //var just_keep_swimming = 1;
         if (round <= 10) {
-          scoring();
+          
           //setInterval(gameScreen, 11000);
           setInterval(function() {
             gameScreen();
              //alert($.cookie('points'));
           }, 11000);
+          scoring();
           
         } else {
           $.ajax({
@@ -185,9 +186,10 @@ function scoring() {
                     
                   }
 
-                 // alert("Updating points to: " + points);
+                 alert("Updating points to: " + points);
                   $.cookie('points', points, {expires: 1});
                 }
+                //$.cookie('answer', 'Z', {expires: 1});
             });
 
             

@@ -17,4 +17,14 @@ router.get('/create', function(req, res, next) {
   res.render('create', { title: 'Create Account' });
 });
 
+/* GET game page. */
+router.get('/game', function(req, res, next) {
+  res.render('game', { title: 'Play the Game' });
+});
+
+/* GET game over page. */
+router.get('/gameover', function(req, res, next) {
+  res.render('gameover', { title: 'Game Over' });
+});
+
 module.exports = router;

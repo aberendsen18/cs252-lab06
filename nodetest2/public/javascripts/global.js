@@ -321,3 +321,8 @@ function gameScreen() {
     window.location.href = "/game";
    
 }
+
+function gameOverScreen() {
+    //console.log("Render the game page");
+    window.location.href = "/gameover";
+}

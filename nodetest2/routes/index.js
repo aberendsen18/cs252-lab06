@@ -21,4 +21,9 @@ router.get('/game', function(req, res, next) {
   res.render('game', { title: 'Play the Game' });
 });
 
+/* GET game page. */
+router.get('/gameover', function(req, res, next) {
+  res.render('gameover', { title: 'Game Over' });
+});
+
 module.exports = router;

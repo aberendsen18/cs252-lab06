@@ -257,3 +257,8 @@ function lobbyScreen() {
   //console.log("Render Login Screen page");
   window.location.href = "/lobby";
 }
+
+function gameScreen() {
+    //console.log("Render the game page");
+    window.location.href = "/game";
+}

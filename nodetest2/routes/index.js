@@ -8,7 +8,8 @@ router.get('/', function(req, res, next) {
 
 /* GET lobby page. */
 router.get('/lobby', function(req, res, next) {
-  res.render('lobby', { title: 'Lobby' });
+  console.log(req.cookies.user);
+  res.render('lobby', { title: 'Lobby', user: req.cookies.user});
 });
 
 /* GET create account page. */

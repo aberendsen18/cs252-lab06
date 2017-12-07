@@ -1,3 +1,7 @@
+//import { setTimeout } from "timers";
+
+//import { setInterval } from "timers";
+
 
 // Userlist data array for filling in info box
 var userListData = [];
@@ -13,14 +17,19 @@ var user;
 
 // DOM Ready =============================================================
 $(document).ready(function() {
-
-    populateTable();
-
+    
     WebURL = location.href;
     //console.log(WebURL);
 
     if (WebURL.includes('lobby')) {
       user = $.cookie('user');
+      populateTable();
+      if ($.cookie('round')) {
+        $.cookie('round', 1, {expires: 1});
+      }
+      if ($.cookie('points')) {
+        $.cookie('points', 0, {expires: 1});
+      }
       if (user == 'null') {
         alert('Please sign in first before entering the lobby!');
         loginScreen();
@@ -31,11 +40,66 @@ $(document).ready(function() {
     } else if (WebURL.includes('game')) {
         if (WebURL.includes('over')) {
           user = $.cookie('user');
+          populateScoreboard();
         } else {
-          var deadline = new Date(Date.parse(new Date()) + 60 * 1000);
+          //$.cookie('points', this.points, {expires: 1});
+          var round = 1;
+          if ($.cookie('round')) {
+            round = parseInt($.cookie('round')) + 1;
+            $.cookie('round', round, {expires: 1});
+          } else {
+            $.cookie('round', round, {expires: 1});
+          } 
+          var deadline = new Date(Date.parse(new Date()) + 10 * 1000);
           initializeClock('clockdiv', deadline);
+          var now = new Date().getTime();
+          var distance = deadline - now;
+          if (distance < 0) {
+            document.getElementById("ccl").style.display = "none";
+            document.getElementById("finish").style.display = "block";
+          }
           user = $.cookie('user');
+
+          //game logic
+        //var just_keep_swimming = 1;
+        if (round <= 10) {
+          scoring();
+          //setInterval(gameScreen, 11000);
+          setInterval(function() {
+            gameScreen();
+             //alert($.cookie('points'));
+          }, 11000);
+          
+        } else {
+          $.ajax({
+            type: 'POST',
+            url: '/users/updatepoints'
+        }).done(function( response ) {
+        
+            // Check for a successful (blank) response
+            if (response.msg === '') {
+            }
+            else {
+                alert('Error: ' + response.msg);
+            }
+        
+        });
+          gameOverScreen();
         }
+        
+    
+        /*call the scoring function
+        if (round <= 10) {
+          //reload the page
+          //assign answers to Z agian
+          //gameScreen();
+        } else {
+          gameOverScreen();
+        }*/
+        }
+
+        
+
     } else {
       //if nothing else, assume it's login page
       user = null;
@@ -57,6 +121,12 @@ $(document).ready(function() {
     // Delete User link click
     $('#userList table tbody').on('click', 'td a.linkdeleteuser', deleteUser);
 
+    //Steal Button click
+    $('#btnSteal').on('click', steal);
+
+    //Heal Button click
+    $('#btnHeal').on('click', heal);
+
     // Logout button click
     $('#btnLogOut').on('click', function() {
       alert("Thanks for playing!");
@@ -68,6 +138,102 @@ $(document).ready(function() {
 });
 
 // Functions =============================================================
+
+function scoring() {
+  var steals = 0;
+  var points = 0;
+  var count = 0;
+  if (!$.cookie('points')) {
+    $.cookie('points', points, {expires: 1});
+  }
+  points = $.cookie('points');
+  //points += 2;
+  $.getJSON( '/users/userlist', function( data ) {
+            // For each item in our JSON, add a table row and cells to the content string
+            
+            $.each(data, function(){
+              ++count;
+                if (this.answer == 'steal') {
+                  //alert("HEREH");
+                  steals = steals + 1;
+                }
+                //alert(count + "  = " +  Object.keys(data).length);
+                if (count == Object.keys(data).length) {
+                  //alert(steals);
+                  //alert($.cookie('answer') == 'steal');
+                  if (steals >= 2) {
+                    //alert("steals greater than 2!");
+                    if ($.cookie('answer') == 'steal') { 
+                      points = parseInt(points) - 20;
+                      
+                    } else {
+                      points = parseInt(points) + 10;
+                      
+                    }
+                  } else if (steals == 1) {
+                    //alert("Only one steal!");
+                    if ($.cookie('answer') == 'steal') {
+                      points = parseInt(points) + 30;
+                      
+                    } else {
+                      points = parseInt(points) - 10;
+                     
+                    }
+                  } else {
+                    //alert("no steals! <3");
+                    points = parseInt(points) + 10;
+                    
+                  }
+
+                 // alert("Updating points to: " + points);
+                  $.cookie('points', points, {expires: 1});
+                }
+            });
+
+            
+
+  });
+  //alert("count"+ count);
+  //alert(Object.keys(data).length)
+  
+}
+
+
+function steal() { 
+  $.ajax({
+    type: 'POST',
+    url: '/users/updateanswersteal'
+}).done(function( response ) {
+
+    // Check for a successful (blank) response
+    if (response.msg === '') {
+    }
+    else {
+        alert('Error: ' + response.msg);
+    }
+});
+  $.cookie('answer', 'steal', {expires: 1});
+  
+}
+
+function heal() {
+  $.ajax({
+    type: 'POST',
+    url: '/users/updateanswerheal'
+}).done(function( response ) {
+
+    // Check for a successful (blank) response
+    if (response.msg === '') {
+    }
+    else {
+        alert('Error: ' + response.msg);
+    }
+
+});
+
+$.cookie('answer', 'heal', {expires: 1});
+
+}
 
 // Fill table with data
 function populateTable() {
@@ -94,6 +260,34 @@ function populateTable() {
         $('#userList table tbody').html(tableContent);
     });
 };
+
+// Fill table with data
+function populateScoreboard() {
+  
+      // Empty content string
+      var tableContent = '';
+  
+      // jQuery AJAX call for JSON
+      $.getJSON( '/users/userlist', function( data ) {
+  
+        // Stick our user data array into a userlist variable in the global object
+        userListData = data;
+  
+          // For each item in our JSON, add a table row and cells to the content string
+          $.each(data, function(){
+              tableContent += '<tr>';
+              //tableContent += '<td><a href="#" class="linkshowuser" rel="' + this.username + '">' + this.username + '</a></td>';
+              //tableContent += '<td>' + this.email + '</td>';
+              //tableContent += '<td><a href="#" class="linkdeleteuser" rel="' + this._id + '">delete</a></td>';
+              tableContent += '<td>' + this.username + '</td>';
+              tableContent += '<td>' + this.points + '</td>';
+              tableContent += '</tr>';
+          });
+  
+          // Inject the whole content string into our existing HTML table
+          $('#scoreboard table tbody').html(tableContent);
+      });
+  };
 
 // Show User Info
 function showUserInfo(event) {
@@ -270,6 +464,7 @@ function login(event) {
             if (this.password == passwordTextbox) {
               //console.log("Render Lobby page");
               $.cookie('user', usernameTextbox, {expires: 1}); // store logged-in user as cookie that expires in 1 day
+              $.cookie('fullName', this.fullname, {expires: 1});
               lobbyScreen();
             } else {
               //set password textbox to empty when re-attempting password
@@ -332,6 +527,8 @@ function initializeClock(id, endtime) {
   var timeinterval = setInterval(updateClock, 1000);
 }
 
+
+
 function createAccount(event) {
   event.preventDefault();
   createAccount();
@@ -354,12 +551,16 @@ function lobbyScreen() {
 
 function gameScreen() {
     //console.log("Render the game page");
+    //set the user answer to Z
+    
+    console.log("Refreshing page...");
     window.location.href = "/game";
 
 }
 
 function gameOverScreen() {
     //console.log("Render the game page");
+    //scoring();
     window.location.href = "/gameover";
 }
 

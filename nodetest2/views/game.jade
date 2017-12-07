@@ -2,17 +2,19 @@ extends layout
 
 block content
     h1= title
-    p Welcome to our test
+    p Welcome to our test  
 
     // Wrapper
     #wrapper
 
         // USER POINTS
         #userPoints
-            h2 Your Points: 
+            h2 Your Points:
+              |  #{points}
             p
                 strong Name:
                 |  <span id='userInfoName'></span>
+                |  #{fullName}
         // /USER POINTS
         // /TIME REMAINING
         // ROUND NUMBER
@@ -20,14 +22,15 @@ block content
           button#btnSteal {
             color: #f00;
           }
-          button#btnHelp {
+          button#btnHeal {
             color: #00FF00;
           }
         h2 Round:
+          |  #{round}
         #roundNumber
             fieldset
                 button#btnSteal Steal
-                button#btnHelp Heal
+                button#btnHeal Heal
                 br
                 //button#btnSubmit Submit
         // /ROUND NUMBER

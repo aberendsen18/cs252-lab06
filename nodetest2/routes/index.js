@@ -19,7 +19,8 @@ router.get('/create', function(req, res, next) {
 
 /* GET game page. */
 router.get('/game', function(req, res, next) {
-  res.render('game', { title: 'Play the Game' });
+  console.log(req.cookies);
+  res.render('game', { title: 'Play the Game', fullName: req.cookies.fullName, points: req.cookies.points, round: req.cookies.round});
 });
 
 /* GET game over page. */

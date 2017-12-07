@@ -74,14 +74,60 @@ router.post('/addlobbyuser', function(req, res) {
 });
 
 /*
-* UPDATE user answer
+* UPDATE user answer steal
 */
-router.post('/updateanswer', function(req, res) {
+router.post('/updateanswersteal', function(req, res) {
     var db = req.db;
     var collection = db.get('userlist');
     var user = req.cookies.user;
-    var user_answer = req.cookies.points;
-    collection.update( { username: user}, { $set: { answer : user_answer } } ,function(err, result){
+    var user_answer_steal = 'steal';
+    collection.update( { username: user}, { $set: { answer : user_answer_steal } } ,function(err, result){
+        res.send(
+            //Send an empty string is sent to database successfully, else, send back the error
+            (err === null) ? { msg: '' } : { msg: err }
+        );
+    });
+});
+
+/*
+* UPDATE user answer heal
+*/
+router.post('/updateanswerheal', function(req, res) {
+    var db = req.db;
+    var collection = db.get('userlist');
+    var user = req.cookies.user;
+    var user_answer_heal = 'heal';
+    collection.update( { username: user}, { $set: { answer : user_answer_heal } } ,function(err, result){
+        res.send(
+            //Send an empty string is sent to database successfully, else, send back the error
+            (err === null) ? { msg: '' } : { msg: err }
+        );
+    });
+});
+
+//update back to Z
+router.post('/updateanswerZ', function(req, res) {
+    var db = req.db;
+    var collection = db.get('userlist');
+    var user = req.cookies.user;
+    var user_answer_heal = 'Z';
+    collection.update( { username: user}, { $set: { answer : user_answer_heal } } ,function(err, result){
+        res.send(
+            //Send an empty string is sent to database successfully, else, send back the error
+            (err === null) ? { msg: '' } : { msg: err }
+        );
+    });
+});
+
+
+
+//update the points
+router.post('/updatepoints', function(req, res) {
+    var db = req.db;
+    var collection = db.get('userlist');
+    var user = req.cookies.user;
+    var user_answer_heal = req.cookies.points;
+    collection.update( { username: user}, { $set: { points : user_answer_heal } } ,function(err, result){
         res.send(
             //Send an empty string is sent to database successfully, else, send back the error
             (err === null) ? { msg: '' } : { msg: err }

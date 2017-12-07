@@ -29,6 +29,8 @@ $(document).ready(function() {
       user = null;
       $.cookie('user', user, {expires: 1}); // reset logged-in user as cookie that expires in 1 day
     } else if (WebURL.includes('game')) {
+        var deadline = new Date(Date.parse(new Date()) + 60 * 1000);
+        initializeClock('clockdiv', deadline);
         user = $.cookie('user');
     } else {
       //if nothing else, assume it's login page
@@ -295,10 +297,6 @@ function initializeClock(id, endtime) {
   var timeinterval = setInterval(updateClock, 1000);
 }
 
-var deadline = new Date(Date.parse(new Date()) + 60 * 1000);
-initializeClock('clockdiv', deadline);
-
-
 function createAccount(event) {
     event.preventDefault();
     createAccount();
@@ -321,4 +319,5 @@ function lobbyScreen() {
 function gameScreen() {
     //console.log("Render the game page");
     window.location.href = "/game";
+   
 }
